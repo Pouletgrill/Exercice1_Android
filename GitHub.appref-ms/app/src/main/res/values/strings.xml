@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Palette</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="rouge_on">Rouge</string>
+    <string name="rouge_off">Pas rouge</string>
+
+    <string name="vert_on">Vert</string>
+    <string name="vert_off">Pas vert</string>
+
+    <string name="bleu_on">Bleu</string>
+    <string name="bleu_off">Pas bleu</string>
+</resources>
