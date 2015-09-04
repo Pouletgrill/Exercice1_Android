@@ -1,0 +1,57 @@
+body {
+   font-size: 1.6em;
+   font-family: Georgia, 'Bitstream Charter', serif;
+   }
+
+hr {
+   height: 1px;
+   }   
+   
+.explication {
+   color: red;
+   /*font-family: Georgia, 'Bitstream Charter', serif;*/
+   }
+   
+.comment {
+   color: green;
+   /*font-family: Georgia, 'Bitstream Charter', serif;*/
+   }
+   
+.attr {
+   /*border: solid black 1px;*/
+   background: #eee;
+   font-family: monospace;
+   font-size: 1.2em;
+   font-weight: bold;
+   padding: 0px 5px;
+   }
+   
+pre {
+   border: solid black 1px;
+   margin-top: 10px;
+   padding: 10px;
+   background: #ffe;
+   font-weight: bold;
+   }
+   
+.page {
+   width: 940px;
+   margin-left: 190px;
+   }
+   
+.fichier {
+   background: #ffe;
+   font-weight: bold;
+   font-family: 'Courier New', Courier, monospace;
+   padding: 10px;
+   border: solid 1px black;
+   color: red;
+   }
+   
+li {
+   margin-bottom: 30px;
+   }
+   
+.surligne {
+   background: yellow;
+   }

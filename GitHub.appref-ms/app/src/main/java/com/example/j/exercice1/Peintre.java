@@ -2,6 +2,8 @@ package com.example.j.exercice1;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ToggleButton;
+
 
 /**
  * Created by 201354694 on 2015-09-04.
@@ -12,8 +14,17 @@ public class Peintre implements OnClickListener {
 
     // construit le gestionnaire et enregistre la couleur et
     // l'activité principale
-    public Peintre(int couleur, Palette mainActivity) {
-        this.couleur = couleur;
+    public Peintre(int couleur, Palette mainActivity, ToggleButton tg) {
+        if (tg.isChecked())
+        {
+            //this.couleur = this.couleur | couleur;
+            this.couleur = couleur;
+        }
+        else
+        {
+            this.couleur = this.couleur & couleur;
+        }
+
         this.mMainActivity = mainActivity;
     }
 

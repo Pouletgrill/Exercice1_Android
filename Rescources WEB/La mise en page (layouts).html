@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://prog101.com/modules/and/layouts.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<link href="./La mise en page (layouts)_files/android.css" rel="stylesheet">
+<script src="./La mise en page (layouts)_files/some-script.js"></script>
+<title>La mise en page (layouts)</title>
+</head>
+
+<body>
+<div class="page">
+<h1>La mise en page (layouts)</h1>
+
+
+<h2 id="xml-java">Mise en page définie en XML</h2>
+
+<p>Déclarée dans <span class="attr">res/layout/mon_layout.xml</span></p>
+
+<p>Utilise différentes propriétés XML</p>
+
+<p>On peut utiliser un éditeur visuel</p>
+
+<p>Chargement dans le code de l'activité avec <span class="attr">setContentView(R.layout.mon_layout)</span></p>
+
+<p>Avantage : séparation du traitement (Java) et de la présentation (XML)</p>
+
+<p>Désavantage : interface utilisateur statique</p>
+<hr>
+
+<h2>Mise en page définie par programmation (Java)</h2>
+
+<p>Instantiation d'un layout, définitions de propriétés, insertions de "sous-layouts" (comme en XML)</p>
+
+<p>Pas besoin d'un fichier de layout (tout est dans le code Java)</p>
+
+<pre>LinearLayout fenetre = new LinearLayout(this);
+fenetre.setUnAttribut(...);
+fenetre.setUnAutreAttribut(...);
+fenetre.addView(widget ou layout);
+...
+setContentView(fenetre);
+</pre>
+
+<p>Avantage : interface utilisateur dynamique</p>
+
+<p>Désavantage : le code mélange traitement et présentation</p>
+<hr>
+
+<h2 id="attributs">Attributs XML</h2>
+
+<p>Chaque classe de Layout a une class interne nommée LayoutParams qui définit les paramètres généraux du Layout</p>
+
+<p>Ces paramètres sont tous appelés <span class="attr">android:layout_xxx</span> et se rapportent généralement aux dimensions et aux marges</p>
+
+<p>Les classes de Layout elles-mêmes définissent des attributs plus spécifiques (dont les noms ne débutent pas par <span class="attr">android:layout</span>)</p>
+
+<h3>Exemple :</h3>
+<pre>&lt;LinearLayout
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   <span class="explication">android:gravity="center_horizontal"
+   android:background="@color/couleur_1"</span>&gt;
+   ...
+&lt;LinearLayout&gt;
+</pre>
+<hr>
+
+<h2 id="taille">Taille</h2>
+<p>On trouve d'abord les attributs <span class="attr">android:layout_height</span> (hauteur) et <span class="attr">android:layout_width</span> (largeur)</p>
+
+<p>La valeur <span class="attr">match_parent</span> remplit l'espace disponble dans le parent, moins le "padding"</p>
+
+<p>Tandis que la valeur <span class="attr">wrap_content</span> utilise la taille naturelle, plus le "padding"</p>
+
+<p>L'attribut <span class="attr">android:layout_weight</span> permet de spécifier des tailles proportionnelles (détails plus loin)</p>
+<hr>
+
+<h2 id="alignement">Alignement</h2>
+
+<p>L'attribut <span class="attr">android:layout_gravity</span> spécifie comment la vue ou le layout est disposé à l'intérieur de son parent</p>
+
+<p>L'attribut <span class="attr">android:gravity</span> spécifie comment le contenu (ex&nbsp;: texte) est disposé à l'intérieur même de la vue</p>
+
+<p>Valeurs possibles :</p>
+
+<p>top, bottom, left, right, center_vertical, center_horizontal, center (vertical et horizontal), fill_vertical, fill_horizontal, fill (vertical et horizontal),
+clip_vertical&nbsp;(?), clip_horizontal&nbsp;(?)
+</p><hr>
+
+<h2 id="marges">Marges</h2>
+
+<p>C'est l'espace vide à l'extérieur du composant</p>
+
+<p>Les valeurs possibles sont :</p>
+<p>
+<span class="attr">android:layout_marginTop</span>, <span class="attr">android:layout_marginBottom</span>, <span class="attr">android:layout_marginLeft</span>, 
+<span class="attr">android:layout_marginRigh</span>
+</p>
+
+<p>L'unité recommandée pour exprimer la dimension des <strong>formes géométriques</strong> est le <strong>dp</strong> :</p>
+<table border="1" cellpadding="10">
+<tbody><tr>
+<td>dp</td>
+<td>density-independent pixels (s'ajuste à la résolution du périphérique)</td>
+</tr>
+</tbody></table>
+
+<p>Tandis que l'unité recommandée pour exprimer la dimension des <strong>caractères</strong> est le <strong>sp</strong> :</p>
+<table border="1" cellpadding="10">
+<tbody><tr>
+<td>sp</td>
+<td>scaled pixels (s'ajuste selon la taille de police préférée)</td>
+</tr>
+</tbody></table>
+
+<p>Mais il est toujours possibles d'utiliser dans tous les cas les unités suivantes :</p>
+<table border="1" cellpadding="10">
+
+<tbody><tr>
+<td>pt</td><td>points</td>
+</tr>
+<tr>
+<td>px</td><td>pixels</td>
+</tr>
+<tr>
+<td>in</td><td>inches (pouces)</td>
+</tr>
+<tr>
+<td>mm</td>
+<td>millimètres</td>
+</tr>
+</tbody></table>
+<hr>
+
+<h2 id="remplissage">Remplissage (<em>padding</em>)</h2>
+
+<p>Espace vide à l'intérieur du composant (entre les contours et le contenu)</p>
+
+<p>Les valeurs possibles sont :</p>
+<p>
+<span class="attr">android:paddingTop</span>, <span class="attr">android:paddingBottom</span>,
+<span class="attr">android:paddingLeft</span>, <span class="attr">android:paddingRight</span>
+</p>
+
+<p>Les unités sont les mêmes que pour les marges</p>
+<hr>
+
+<h2 id="couleur">Autres attributs importants</h2>
+
+<h3>Identificateur</h3>
+
+<p>L'attribut <span class="attr">android:id</span> est utilisé si le code Java a besoin d'une référence à une vue</p>
+
+<p>Aussi utilisé en XML avec le RelativeLayout</p>
+
+<h3>Couleurs</h3>
+
+<p>L'attribut <span class="attr">android:background</span> spécifie la couleur d'arrière-plan d'un layout, exemple&nbsp;: <span class="attr">android:background="@color/rose_bonbon"</span></p>
+
+<p>Aussi pour les images d'arrière-plan, exemple&nbsp;: <span class="attr">android:background="@drawable/singe"</span>
+
+</p><p>L'attribut <span class="attr">android:textColor</span> est utilisé pour les composants comme les zones de texte (TextView) et les boutons (Button)</p>
+
+<p>Il existe plusieurs façons de représenter une couleur : <span class="attr">#rrggbb</span>, <span class="attr">#aarrggbb</span>, <span class="attr">@color/nom_couleur</span></p>
+
+<h3>Gestionnaire de clic</h3>
+
+<p>Attribut <span class="attr">android:onClick</span></p>
+
+<p>Spécifie une méthode "public" de l'activité principale qui prend un paramètre de type View (le composant cliqué) et ne retourne rien (void)</p>
+<hr>
+
+<h2 id="linear-layout">LinearLayout</h2>
+
+<p>Layout principal</p>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"&gt;
+    ...
+&lt;/LinearLayout&gt;
+</pre>
+
+<p>La puissance du LinearLayout se révèle avec l'imbrication de plusieurs layouts avec des propriétés différentes</p>
+
+<p>Voici un exemple un peu fou</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/singe_fou.png">
+</p>
+
+<p>On commence par 4 boutons centrés horizontalement</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_1.png">
+</p>
+
+<pre><span style="color: #999" ;="">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"&gt;</span>
+    
+    &lt;LinearLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:gravity="center_horizontal"
+        android:background="@color/couleur_1"&gt;
+                
+        &lt;Button android:text="Ces" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+        &lt;Button android:text="boutons" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+        &lt;Button android:text="sont" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+        &lt;Button android:text="centrés" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+    &lt;/LinearLayout&gt;
+    
+<span style="color: #999" ;="">&lt;/LinearLayout&gt;
+</span>
+</pre>
+
+<p>On ajoute 4 boutons cadrés à gauche</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_2.png">
+</p>
+
+<pre>...
+    &lt;LinearLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:gravity="left"
+        android:background="@color/couleur_2"&gt;
+        
+        &lt;Button android:text="Ceux-là" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+        &lt;Button android:text="sont" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+        &lt;Button android:text="cadrés" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+        &lt;Button android:text="à gauche" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"/&gt;
+    &lt;/LinearLayout&gt;
+...
+</pre>
+
+<p>Encore deux boutons cadrés à gauche...</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_3.png">
+</p>
+
+<pre>...
+    &lt;LinearLayout
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"&gt;
+        
+        &lt;LinearLayout 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:gravity="left"
+            android:background="@color/couleur_3"&gt;
+            
+            &lt;Button android:text="Sur" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+            &lt;Button android:text="bordures" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+        &lt;/LinearLayout&gt;
+    &lt;/LinearLayout&gt;
+...
+</pre>
+
+<p>Et un bouton cadré à droite sur la même ligne</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_4.png">
+</p>
+
+<pre><span style="color: #999" ;="">
+...
+    &lt;LinearLayout
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"&gt;
+        
+        &lt;LinearLayout 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:gravity="left"
+            android:background="@color/couleur_3"&gt;
+            
+            &lt;Button android:text="Sur" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+            &lt;Button android:text="bordures" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+        &lt;/LinearLayout&gt;</span>
+        
+        &lt;LinearLayout 
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content" 
+            android:gravity="right"
+            android:background="@color/couleur_4"&gt;
+            &lt;Button android:text="externes" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+        &lt;/LinearLayout&gt;
+<span style="color: #999" ;="">    &lt;/LinearLayout&gt;
+...</span>
+</pre>
+
+<p>Des boutons placés à la verticale dans un layout imbriqué</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_5.png">
+</p>
+
+<pre>...
+    &lt;LinearLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"&gt;
+        
+        &lt;LinearLayout 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:orientation="vertical"
+            android:background="@color/couleur_5"&gt;
+            
+            &lt;Button android:text="Layout" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+            &lt;Button android:text="linéaire" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+            &lt;Button android:text="vertical" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+            &lt;Button android:text="imbriqué" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content"/&gt;
+        &lt;/LinearLayout&gt;
+        ...
+    &lt;/LinearLayout&gt;
+...
+</pre>
+
+<p>On ajoute des boutons radio</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_6.png">
+</p>
+
+<pre>...
+    &lt;LinearLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"&gt;
+        ...        
+        &lt;RadioGroup 
+            android:layout_width="wrap_content" 
+            android:layout_height="match_parent" 
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@color/couleur_6"&gt;
+            
+            &lt;RadioButton 
+                android:text="Utilisez"
+                android:layout_height="wrap_content" 
+                android:layout_width="wrap_content"/&gt;
+            &lt;RadioButton 
+                android:text="RadioGroup"
+                android:layout_height="wrap_content" 
+                android:layout_width="wrap_content"/&gt;
+            &lt;RadioButton 
+                android:text="pour les"
+                android:layout_height="wrap_content" 
+                android:layout_width="wrap_content"/&gt;
+             &lt;RadioButton 
+                android:text="RadioButton"
+                android:layout_height="wrap_content" 
+                android:layout_width="wrap_content"/&gt;
+         &lt;/RadioGroup&gt;
+         ...        
+    &lt;/LinearLayout&gt;
+...
+</pre>
+
+<p>Maintenant 4 rangées de boutons dans une colonne, la première centrée horizontalement</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_7.png">
+</p>
+
+<pre>...
+         &lt;LinearLayout 
+             android:layout_width="match_parent" 
+             android:layout_height="match_parent" 
+             android:orientation="vertical"&gt;
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:background="@color/couleur_1"&gt;
+                 
+                 &lt;Button android:text="A" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="B" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;
+             
+             ...            
+
+         &lt;/LinearLayout&gt;
+...
+</pre>
+
+<p>La deuxième cadrée à gauche</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_8.png">
+</p>
+
+<pre><span style="color: #999" ;="">
+...
+         &lt;LinearLayout 
+             android:layout_width="match_parent" 
+             android:layout_height="match_parent" 
+             android:orientation="vertical"&gt;
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:background="@color/couleur_1"&gt;
+                 
+                 &lt;Button android:text="A" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="B" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;</span>
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="left"
+                 android:background="@color/couleur_2"&gt;
+                 
+                 &lt;Button android:text="C" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="D" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;
+             
+             <span style="color: #999" ;="">...         
+
+         &lt;/LinearLayout&gt;
+...</span>
+</pre>
+
+<p>La troisième cadrée à droite</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_9.png">
+</p>
+
+<pre><span style="color: #999" ;="">
+...
+         &lt;LinearLayout 
+             android:layout_width="match_parent" 
+             android:layout_height="match_parent" 
+             android:orientation="vertical"&gt;
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:background="@color/couleur_1"&gt;
+                 
+                 &lt;Button android:text="A" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="B" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="left"
+                 android:background="@color/couleur_2"&gt;
+                 
+                 &lt;Button android:text="C" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="D" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;</span>
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="right"
+                 android:background="@color/couleur_3"&gt;
+                 
+                 &lt;Button android:text="E" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="F" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;
+             
+             <span style="color: #999" ;="">...
+             
+         &lt;/LinearLayout&gt;
+...
+</span></pre>
+
+<p>Dans la quatrième ligne, un bouton cadré à gauche et un autre cadré à droite</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_10.png">
+</p>
+
+<pre><span style="color: #999" ;="">
+...
+         &lt;LinearLayout 
+             android:layout_width="match_parent" 
+             android:layout_height="match_parent" 
+             android:orientation="vertical"&gt;
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="center_horizontal"
+                 android:background="@color/couleur_1"&gt;
+                 
+                 &lt;Button android:text="A" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="B" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="left"
+                 android:background="@color/couleur_2"&gt;
+                 
+                 &lt;Button android:text="C" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="D" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"
+                 android:gravity="right"
+                 android:background="@color/couleur_3"&gt;
+                 
+                 &lt;Button android:text="E" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+                 &lt;Button android:text="F" 
+                         android:layout_width="wrap_content" 
+                         android:layout_height="wrap_content"/&gt;
+             &lt;/LinearLayout&gt;</span>
+             
+             &lt;LinearLayout 
+                 android:layout_width="match_parent" 
+                 android:layout_height="wrap_content"&gt;
+                 
+                 &lt;LinearLayout 
+                     android:layout_width="wrap_content" 
+                     android:layout_height="wrap_content" 
+                     android:gravity="left"
+                     android:background="@color/couleur_4"&gt;
+                     
+                     &lt;Button android:text="G" 
+                             android:layout_width="wrap_content" 
+                             android:layout_height="wrap_content"/&gt;
+                 &lt;/LinearLayout&gt;
+                 
+                 &lt;LinearLayout 
+                     android:layout_width="match_parent" 
+                     android:layout_height="wrap_content" 
+                     android:gravity="right"
+                     android:background="@color/couleur_5"&gt;
+                     
+                     &lt;Button android:text="H" 
+                             android:layout_width="wrap_content" 
+                             android:layout_height="wrap_content"/&gt;
+                 &lt;/LinearLayout&gt;
+             &lt;/LinearLayout&gt;
+         <span style="color: #999" ;="">&lt;/LinearLayout&gt;
+    &lt;/LinearLayout&gt;
+...</span>
+</pre>
+
+<p>Et pour finir on ajoute 2 boutons</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layouts_11.png">
+</p>
+
+<pre><span style="color: #999" ;="">...</span>
+    &lt;Button android:text="Bouton avec marge en haut" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/&gt;
+    &lt;Button android:text="Bouton ordinaire" 
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content"/&gt;
+<span style="color: #999" ;="">&lt;/LinearLayout&gt;</span>
+</pre>
+<hr>
+
+<h2 id="layout-weight">La propriété "layout_weight"</h2>
+
+<p>En utilisant cette propriété, la taille d'un composant devient proportionnelle à son poids (<em>weight</em>)</p>
+
+<p>D'abord, on donne au composant une hauteur nulle, exemple&nbsp;: <span class="attr">android:layout_height="0dp"</span></p>
+
+<p>Ensuite, on utilise des poids relatifs pour chacun des composants</p>
+
+<p>Par exemple, trois composants placés dans le même conteneur et ayant des poids relatifs de 1, 1 et 2 occuperont respectivement 25%, 25% et 50% de l'espace du conteneur</p>
+
+<p>L'approche suggérée est de faire en sorte que la somme des poids soit égale à 100 et de traiter les valeurs comme des pourcentages</p>
+
+<p>Voici un exemple :</p>
+
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"&gt;    
+	
+    &lt;TextView
+        android:layout_width="match_parent"
+        android:background="#ffcccc"
+        <span class="explication">android:layout_height="0dp"
+        android:layout_weight="25"</span>
+        android:text="layout_weight=25"
+        android:textSize="20sp"/&gt;
+        
+    &lt;TextView
+        android:layout_width="match_parent"
+        android:background="#ccffcc"
+        <span class="explication">android:layout_height="0dp"
+        android:layout_weight="25"</span>
+        android:text="layout_weight=25"
+        android:textSize="20sp"/&gt;	
+        
+    &lt;TextView
+        android:layout_width="match_parent"
+        android:background="#ccccff"	    
+        <span class="explication">android:layout_height="0dp"
+        android:layout_weight="50"</span>
+        android:text="layout_weight=50"
+        android:textSize="20sp"/&gt;	
+	
+&lt;/LinearLayout&gt;
+</pre>
+
+<p>Le résultat :</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/layout_weight.png">
+</p>
+<hr>
+
+<h2 id="table-layout">TableLayout</h2>
+
+<p>Utilise un genre de tableau (sans bordures) pour disposer les composants (et les layouts imbriqués)</p>
+
+<p>Comme dans le cas des tableaux HTML, les numéros de rangées et de colonnes sont déterminées automatiquement et non spécifiés de manière explicite</p> 
+<hr>
+
+<h2>Quelques attributs importants de TableLayout</h2>
+<p>L'attribut <span class="attr">android:stretchColumns</span> est un index (ou une liste d'index) pour spécifier la ou les colonnes qui doivent être étirées si le tableau est plus petit que son parent</p>
+
+<p>Contrepartie de l'attribut précédent, <span class="attr">android:shrinkColumns</span> spécifie la ou les colonnes qui doivent être rétrécies si le tableau est plus grand que son parent</p>
+
+<p>L'attribut <span class="attr">android:collapseColumns</span> indique la ou les colonnes qui ne seront pas affichées (remarque&nbsp;: l'affichage peut être rétabli plus tard par programmation)</p>
+<hr>
+
+<h2>Attributs importants d'un élément dans un TableRow</h2>
+
+<p>Les composants sont placés principalement à l'aide de la balise &lt;TableRow&gt;</p>
+
+<p>Les éléments sont normalement disposés de gauche à droite, sans avoir besoin de spécifier le numéro de la colonne</p>
+
+<p>L'attribut <span class="attr">android:layout_column</span> permet de spécifier exactement la colonne à utiliser, laissant vides les colonnes précédentes</p>
+
+<p>L'attribut <span class="attr">android:layout_span</span> indique le nombre de colonnes que l'élément doit chevaucher (équivalent du "colspan" en HTML)</p>
+
+<p>Remarque&nbsp;: il n'y a pas d'équivalent du "rowspan" de HTML (la solution est d'utiliser des tableaux imbriqués)</p>
+
+<p>Un exemple :</p>
+
+<pre>&lt;TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    <span class="explication">android:stretchColumns="1"</span>&gt;
+
+    &lt;TableRow&gt;
+        &lt;Button android:text="Btn 0"/&gt;
+        &lt;Button android:text="Btn 1"/&gt;
+        &lt;Button android:text="Btn 2"/&gt;
+    &lt;/TableRow&gt;
+    &lt;TableRow&gt;
+        &lt;Button android:text="Btn 3"/&gt;
+        &lt;Button android:text="Btn 4"/&gt;
+        &lt;Button android:text="Btn 5"/&gt;
+    &lt;/TableRow&gt;	
+    &lt;TableRow&gt;
+        &lt;Button android:text="Btn 6"/&gt;
+        &lt;Button android:text="Btn 7" <span class="explication">android:layout_column="2"</span>/&gt;
+    &lt;/TableRow&gt;
+    &lt;TableRow&gt;
+        &lt;Button android:text="Btn 8"/&gt;
+        &lt;Button android:text="Btn 9" <span class="explication">android:layout_span="2"</span>/&gt;
+    &lt;/TableRow&gt;
+
+&lt;/TableLayout&gt;
+</pre>
+
+<p>Le résultat :</p>
+
+<p>
+<img src="./La mise en page (layouts)_files/table_layout.png">
+</p>
+
+<h2 id="relative-layout">RelativeLayout</h2>
+<p>
+Pas très populaire auprès des débutants parce que le plus compliqué de tous
+</p>
+<p>
+Mais aussi le moins gourmand en ressources
+</p>
+<br>
+
+<p>
+<img src="./La mise en page (layouts)_files/bees.jpg">
+<br>
+<span style="color:red; font-size: 1.2em; font-weight: bold; font-style: italic">Nooo! Not the Relative Layooout!</span>
+</p>
+<br>
+
+<p>
+Dans ce type de layout, on place les composants les uns par rapport aux autres
+</p>
+
+<p>
+Les composants sont identifiés à l'aide de la propriété <span class="attr">android:id</span>
+</p>
+
+<h2>Les attributs d'alignement</h2>
+<p>
+Alignement <span class="surligne">à l'intérieur du conteneur (layout)</span>&nbsp;:
+</p>
+<p>
+<span class="attr">android:layout_alignParentTop</span><br>
+<span class="attr">android:layout_alignParentRight</span><br>
+<span class="attr">android:layout_alignParentBottom</span><br>
+<span class="attr">android:layout_alignParentLeft</span>
+</p>
+<p>
+<span class="attr">android:layout_centerHorizontal</span><br>
+<span class="attr">android:layout_centerVertical</span><br>
+<span class="attr">android:layout_centerInParent</span>
+</p>
+
+<p>
+Tous ces attributs prennent les valeurs <strong>true</strong> ou <strong>false</strong>
+</p>
+
+<p>
+Alignement <span class="surligne">dans l'espace d'un autre composant</span>&nbsp;:
+</p>
+<p>
+<span class="attr">android:layout_alignTop</span><br>
+<span class="attr">android:layout_alignRight</span><br>
+<span class="attr">android:layout_alignBottom</span><br>
+<span class="attr">android:layout_alignLeft</span>
+</p>
+<p>
+Ces attributs prennent comme valeur l'identificateur d'un composant
+</p>
+
+<p>
+Alignement <span class="surligne">par rapport à un autre composant</span>&nbsp;:
+</p>
+<span class="attr">android:layout_toLeftOf</span><br>
+<span class="attr">android:layout_toRightOf</span><br>
+<span class="attr">android:layout_above</span><br>
+<span class="attr">android:layout_below</span>
+<p></p>
+<p>
+Ces attributs prennent comme valeur l'identificateur d'un composant
+</p>
+<p>
+Premier composant :
+</p>
+<pre>&lt;Button id="@+id/bouton_1"
+    android:layout_alignParentRight="true"
+    .../&gt;
+</pre>
+<p>
+Deuxième composant :
+</p>
+<pre>&lt;Button
+    android:layout_toLeftOf="@id/bouton_1"
+    .../&gt;
+</pre>
+<p>
+Remarque : on utilise "@id" et non "@+id", puisque le composant a déjà été déclaré plus haut dans le fichier
+</p>
+<p>
+Sortie :
+</p>
+<div style="width: 600px; background: #eee; border: solid black 1px; padding: 20px; text-align: right">
+<span style="background: #0f0; border: solid black 1px; padding: 10px;">Bouton 2</span>
+<span style="background: #ff0; border: solid black 1px; padding: 10px;">Bouton 1</span>
+</div>
+
+<p>
+Un exemple :
+</p><p>
+</p><pre>&lt;RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"&gt;
+
+    &lt;TextView
+        <span class="explication">android:id="@+id/en_arriere"</span>
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#ff0000"
+        android:textColor="#ffff00"
+        android:textSize="40sp"
+        android:text="En arrière"
+        android:gravity="center"/&gt;
+
+    &lt;TextView
+        <span class="explication">android:layout_alignBottom="@id/en_arriere"</span>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ffff"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:text="Par-dessus"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"/&gt;
+
+    &lt;Button
+        <span class="explication">android:id="@+id/bouton_pizza"</span>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pizza"
+        <span class="explication">android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"</span>/&gt;
+
+    &lt;Button
+        <span class="explication">android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/bouton_pizza"</span>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frites"/&gt;
+
+    &lt;EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Entrez votre commande"
+        <span class="explication">android:layout_above="@id/bouton_pizza"</span>/&gt;
+
+&lt;/RelativeLayout&gt;
+</pre>
+
+<p>
+Le résultat :
+</p>
+<img src="./La mise en page (layouts)_files/relative_layout.png">
+<br>
+</div>
+
+</body></html>

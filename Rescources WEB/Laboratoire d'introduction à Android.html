@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://prog101.com/modules/android/travaux/labo1.php -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="./Laboratoire d'introduction à Android_files/css" rel="stylesheet" type="text/css">
+<link href="./Laboratoire d'introduction à Android_files/gabarit.css" rel="stylesheet">
+<meta charset="utf-8">
+<title>Laboratoire d'introduction à Android</title>
+</head>
+
+<body>
+<div class="coulbarresup">
+   <div class="centre">
+      <div id="barresup">
+         <span id="siteweb">Prog 101</span>
+         <span class="droite">
+            <span id="usager">Brosseau, Xavier</span>
+            <span><a href="http://prog101.com/logout.php">Déconnexion</a> | <a href="http://prog101.com/profil.php">Profil</a></span>
+         </span>
+      </div>
+   </div>
+</div>
+
+<div class="ligne"></div>
+
+<!--<div class="coulcours">-->
+<div style="background: #093; color: white">
+<div class="centre">
+   <div id="nocours">420-KEM-LG</div>
+   <div id="titrecours">Réingénierie de systèmes informatiques</div>
+</div>
+</div>
+
+<div class="coulmenu">
+   <div class="centre">
+      <div id="menu">
+         <a class="m" href="http://prog101.com/cours/kem/">Accueil</a> | 
+         <a class="m" href="http://developer.android.com/reference/packages.html" target="_blank">Doc Android</a> | 
+         <a class="m" href="http://docs.oracle.com/javase/8/docs/api/" target="_blank">Doc Java 8
+         </a> | 
+         <a class="m" href="http://prog101.com/bc/" target="_blank">Base de connaissances</a> | 
+
+
+         <a class="m" href="http://prog101.com/modules/" target="_blank">Notes en vrac</a> | 
+         <!--<a class="m" href="/travaux/labos.php">Labos et TP</a> |-->
+         <!--<a class="m" href="/util/">Outils Web</a> |-->
+         <!--<a class="m" href="/commun/horaire.png">Mon horaire</a> |-->
+         <!--<a class="m" href="/cours/kem/plan-de-cours.pdf">Plan de cours</a> |-->
+         <a class="m" href="http://prog101.com/commun/contact.php">Contact</a>
+      </div>
+   </div>
+</div>
+<div class="coultexte">
+   <div class="centre">
+   <div id="contenu"><h1>Laboratoire d'introduction à Android</h1>
+<h2>Exercice 1 (1 point)</h2>
+<p>
+Écrivez une application Android dont l'interface utilisateur contient trois boutons à bascule (classe <em>ToggleButton</em>) et une zone de texte (classe <em>TextView</em>). Les boutons portent l'étiquette "Rouge/Pas rouge", "Vert/Pas vert" et "Bleu/Pas bleu". L'application doit changer la couleur de la zone de texte selon l'état des boutons. Il y a 8 combinaisons possibles.
+</p>
+<p>
+Les couleurs en Java sont représentées pas des nombres de 32 bits (type <em>int</em>) selon le modèle alpha-rouge-vert-bleu. Ainsi, 0xFFFF0000 est un rouge opaque (<em>Color.RED</em>) et 0xFF0000FF est un bleu opaque (<em>Color.BLUE</em>). La combinaison des deux donne la couleur de l'exemple ici-bas).
+</p>
+<p>
+<img src="./Laboratoire d'introduction à Android_files/labo_palette.png">
+</p>
+<p>
+Pour ajouter ou retirer la composante rouge, verte ou bleue de la couleur courante, il suffit d'utiliser les opérateurs sur les bits et les masques appropriés. Par exemple&nbsp;:
+</p>
+<pre style="font-size: 1.4em">// ajoute le rouge à la couleur courante
+mCouleur = mCouleur | 0x00FF0000;
+
+// retire le rouge de la couleur courante
+mCouleur = mCouleur &amp; 0xFF00FFFF;
+</pre>
+<h2>Exercice 2 (1 point)</h2>
+<p>
+Écrivez une application Android dont l'interface utilisateur contient trois boutons à image (classe <em>ImageButton</em>) et une zone de texte (classe <em>TextView</em>). Chaque bouton affiche l'image d'un homme ou d'une femme célèbre (Google est votre ami). Lorsque l'utilisateur clique sur un de ces boutons, une citation de la personnalité correspondante est sélectionnée au hasard parmi cinq (puisée dans le fichier res/values/strings.xml) et s'affiche dans la zone de texte. Attention&nbsp;: la même citation ne doit pas s'afficher deux fois de suite!
+</p>
+</div>   </div>
+</div>
+
+<div class="ligne"></div>
+
+<div class="coulbarresup">
+   <div class="centre">
+      <div id="basdepage">
+         <span>&nbsp;</span>
+      </div>
+   </div>
+</div>
+
+</body></html>

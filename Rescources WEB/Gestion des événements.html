@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://prog101.com/modules/and/evenements.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<link href="./Gestion des événements_files/android.css" rel="stylesheet">
+<script src="./Gestion des événements_files/some-script.js"></script>
+<title>Gestion des événements</title>
+</head>
+
+<body>
+<div class="page">
+<h1>Gestion des événements</h1>
+<div style="border: solid black 1px; padding: 10px; background: #eee; font-style: italic;">
+La connaissance s'acquiert par l'expérience, tout le reste n'est que de l'information.<br>
+-- Albert Einstein
+</div>
+
+<h2>Stratégies possibles</h2>
+<ul>
+<li>Gestionnaire dans une classe distincte de l'activité principale</li>
+<li>Gestionnaire dans une classe interne nommée</li>
+<li>Gestionnaire dans une classe interne anonyme</li>
+<li>Gestionnaire dans l'activité principale qui implémente la classe écouteur (listener)</li>
+<li>Gestionnaire dans l'activité principale avec spécification de la méthode dans le fichier de mise en page (layout)</li>
+</ul>
+<hr>
+
+<h2>Gestionnaire dans une classe distincte de l'activité principale</h2>
+
+<p>
+Dans l'exemple, on change la couleur (rouge, vert ou bleu) d'un composant de type TextView à l'aide de boutons ordinaires et de boutons radio.
+</p>
+
+<p>
+Nous utiliserons une classe distincte (séparée de l'activité principale) qui implémente View.OnClickListener
+</p>
+
+<h3>Avantages</h3>
+<ul>
+<li>On peut passer des paramètres au gestionnaire d'événements</li>
+<li>Faible couplage - le gestionnaire peut être modifié indépendamment du reste de l'application</li>
+</ul>
+<h3>Inconvénients</h3>
+<ul>
+<li>Si le gestionnaire veut utiliser du code de l'activité principale, il doit disposer d'une référence à celle-ci...</li>
+<li>et ce code doit être "public"</li>
+</ul>
+
+<div style="border: solid red 1px; padding: 10px; color: red;">
+<strong>AVERTISSEMENT</strong><br>
+Les exemples de code présentés ici ont été développés avec Eclipse à l'automne 2014 et utilisent la classe Activity plutôt que ActionBarActivity.
+</div>
+<hr>
+
+<h2>Le projet Couleurs 1</h2>
+
+<span class="fichier">com.prog101.couleurs1.MainActivity.java</span>
+<pre>package com.prog101.couleurs1;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+
+<span class="comment">/*
+ * Utilisation d'une classe distincte (externe) comme gestionnaire
+ * d'événements.
+ */
+
+// cette classe identifie les contrôles définis dans "activity_main.xml"
+// et leur assigne des gestionnaires d'événements (approche hybride)</span>
+public class MainActivity extends Activity {
+    
+    <span class="comment">// selon les règles de codage d'Android, le nom d'une variable
+    // membre qui n'est pas publique doit commencer par un "m"</span>
+    private View mZoneCouleur;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        <span class="comment">// cet appel doit être effectué avant toute utilisation de
+        // findViewById</span>
+        setContentView(R.layout.activity_main);
+        
+        mZoneCouleur = findViewById(R.id.zone_couleur);
+        
+        Button b1 = (Button)findViewById(R.id.bouton1);
+        Button b2 = (Button)findViewById(R.id.bouton2);
+        Button b3 = (Button)findViewById(R.id.bouton3);
+        
+        RadioButton r1 =
+                (RadioButton)findViewById(R.id.bouton_radio1);
+        RadioButton r2 = 
+                (RadioButton)findViewById(R.id.bouton_radio2);
+        RadioButton r3 = 
+                (RadioButton)findViewById(R.id.bouton_radio3);
+        
+        <span class="comment">// même gestionnaire pour boutons ordinaires et boutons radio,
+        // on passe la couleur et une référence à l'activité principale</span>
+        b1.setOnClickListener(new Peintre(Color.RED, this));
+        b2.setOnClickListener(new Peintre(Color.GREEN, this));
+        b3.setOnClickListener(new Peintre(Color.BLUE, this));
+        
+        r1.setOnClickListener(new Peintre(Color.RED, this));
+        r2.setOnClickListener(new Peintre(Color.GREEN, this));
+        r3.setOnClickListener(new Peintre(Color.BLUE, this));
+    }
+    
+    <span class="comment">// cette méthode doit être publique pour être accédée par le
+    // gestionnaire - une autre approche autait été de passer
+    // directement la zone de couleur (le TextView) au gestionnaire</span>
+    public void peindreRegion(int couleur) {
+        mZoneCouleur.setBackgroundColor(couleur);
+    }
+}
+</pre>
+
+<span class="fichier">com.prog101.couleurs1.Peintre.java</span>
+<pre>package com.prog101.couleurs1;
+
+import android.view.View;
+import android.view.View.OnClickListener;
+
+<span class="comment">/*
+ * Gestionnaire d'événement dans une classe distincte (externe).
+ */</span>
+public class Peintre implements OnClickListener {    
+    private int couleur;
+    private MainActivity mMainActivity;
+
+    <span class="comment">// construit le gestionnaire et enregistre la couleur et
+    // l'activité principale</span>
+    public Peintre(int couleur, <span class="explication">MainActivity mainActivity</span>) {
+        this.couleur = couleur;
+        <span class="explication">this.mMainActivity = mainActivity;</span>
+    }
+
+    <span class="comment">// fait appel à une méthode de l'activité principale</span>
+    @Override
+    public void onClick(View vue) {
+        <span class="explication">mMainActivity</span>.peindreRegion(couleur);
+    }
+}
+</pre>
+
+<span class="fichier">res/layout/activity_main.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    <span class="comment">&lt;!--
+        On donne un id aux boutons pour qu'on puisse y accéder à partir
+        du code Java avec la méthode findViewById.
+    
+        Les deux séries de boutons utilisent le même label défini dans
+        le fichiers de chaînes.    
+    --&gt;</span>
+    &lt;Button
+        android:id="@+id/bouton1"
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:textColor="#ff0000"
+        android:text="@string/label_rouge"/&gt;
+    &lt;Button 
+        android:id="@+id/bouton2"
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:textColor="#009900"
+        android:text="@string/label_vert"/&gt;
+    &lt;Button 
+        android:id="@+id/bouton3" 
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:textColor="#0000ff"
+        android:text="@string/label_bleu"/&gt;    
+    <span class="comment">&lt;!--
+         Un RadioGroup fait en sorte qu'un seul bouton puisse être
+         sélectionné.
+    --&gt;</span>
+    &lt;RadioGroup 
+        android:gravity="center_horizontal" 
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:orientation="horizontal"&gt;
+        &lt;RadioButton 
+            android:id="@+id/bouton_radio1"
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_rouge"/&gt; 
+        &lt;RadioButton 
+            android:id="@+id/bouton_radio2"
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_vert"/&gt;
+        &lt;RadioButton 
+            android:id="@+id/bouton_radio3"
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_bleu"/&gt;
+    &lt;/RadioGroup&gt;
+    &lt;TextView 
+        android:id="@+id/zone_couleur" 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/&gt;
+&lt;/LinearLayout&gt;
+</pre>
+
+<span class="fichier">res/values/strings.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Couleurs 1&lt;/string&gt;
+    &lt;string name="label_rouge"&gt;Rouge&lt;/string&gt;
+    &lt;string name="label_vert"&gt;Vert&lt;/string&gt;
+    &lt;string name="label_bleu"&gt;Bleu&lt;/string&gt;
+&lt;/resources&gt;
+</pre>
+
+<p>
+Interface utilisateur des projets Couleurs 1 et Couleurs 2&nbsp;:
+</p>
+<p>
+<img src="./Gestion des événements_files/couleurs1.png">
+</p>
+<hr>
+
+<h2>Gestionnaire dans une classe interne nommée</h2>
+<p>
+Nous utiliserons maintenant un gestionnaire dans une classe interne nommée (ou non anonyme) qui implémente View.OnClickListener.
+</p>
+
+<h3>Avantages</h3>
+<ul>
+<li>On peut passer des paramètres au gestionnaire d'événement</li>
+<li>Le gestionnaire peut accéder à des données privées de l'activité principale (pas besoin de référence à l'activité)</li>
+</ul>
+<h3>Inconvénients</h3>
+<ul>
+<li>Étant donné que le gestionnaire est dans le même fichier que l'activité, il est couplé plus étroitement à celle-ci et ne peut être modifié indépendamment</li>
+</ul>
+<hr>
+
+<h2>Le projet Couleurs 2</h2>
+<span class="fichier">com.prog101.couleurs2.MainActivity.java</span>
+<pre>package com.prog101.couleurs2;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.RadioButton;
+
+<span class="comment">/*
+ * Utilisation d'une classe interne nommée (non anonyme) comme
+ * gestionnaire d'événements.
+ */</span>
+
+public class MainActivity extends Activity {
+    private View mZoneCouleur;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        
+        <span class="comment">// récupération des widgets depuis le fichier XML</span>
+        mZoneCouleur = findViewById(R.id.zone_couleur);
+        Button b1 = (Button)findViewById(R.id.bouton1);
+        Button b2 = (Button)findViewById(R.id.bouton2);
+        Button b3 = (Button)findViewById(R.id.bouton3);
+        RadioButton r1 =
+                (RadioButton)findViewById(R.id.bouton_radio1);
+        RadioButton r2 = 
+                (RadioButton)findViewById(R.id.bouton_radio2);
+        RadioButton r3 = 
+                (RadioButton)findViewById(R.id.bouton_radio3);
+        
+        <span class="comment">// plus nécessaire de passer au gestionnaire une référence à
+        // l'activité principale (this)</span>
+        b1.setOnClickListener(new Peintre(Color.RED));
+        b2.setOnClickListener(new Peintre(Color.GREEN));
+        b3.setOnClickListener(new Peintre(Color.BLUE));
+        r1.setOnClickListener(new Peintre(Color.RED));
+        r2.setOnClickListener(new Peintre(Color.GREEN));
+        r3.setOnClickListener(new Peintre(Color.BLUE));
+    }
+    
+    <span class="comment">// méthode privée car seulement appelée par une classe interne</span>
+    private void peindreRegion(int couleur) {
+        mZoneCouleur.setBackgroundColor(couleur);
+    }
+    
+    <span class="comment">// la classe interne nommée est privée</span>
+    private class Peintre implements OnClickListener {    
+        private int couleur;
+
+        public Peintre(int couleur) {
+            this.couleur = couleur;
+        }
+
+        @Override
+        public void onClick(View vue) {
+            <span class="comment">// fait appel à une méthode hors de la classe interne</span>
+            peindreRegion(couleur);
+        }
+    }
+}
+</pre>
+
+<p>
+Le fichier de mise en page (layout) est le même que dans le projet précédent.
+</p>
+
+<span class="fichier">res/layout/activity_main.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    <span class="comment">&lt;!--
+        On donne un id aux boutons pour qu'on puisse y accéder à partir
+        du code Java avec la méthode findViewById.
+    
+        Les deux séries de boutons utilisent le même label défini dans
+        le fichiers de chaînes.    
+    --&gt;</span>
+    &lt;Button
+        android:id="@+id/bouton1"
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:textColor="#ff0000"
+        android:text="@string/label_rouge"/&gt;
+    &lt;Button 
+        android:id="@+id/bouton2"
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:textColor="#009900"
+        android:text="@string/label_vert"/&gt;
+    &lt;Button 
+        android:id="@+id/bouton3" 
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:textColor="#0000ff"
+        android:text="@string/label_bleu"/&gt;    
+    <span class="comment">&lt;!--
+         Un RadioGroup fait en sorte qu'un seul bouton puisse être
+         sélectionné.
+    --&gt;</span>
+    &lt;RadioGroup 
+        android:gravity="center_horizontal" 
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:orientation="horizontal"&gt;
+        &lt;RadioButton 
+            android:id="@+id/bouton_radio1"
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_rouge"/&gt; 
+        &lt;RadioButton 
+            android:id="@+id/bouton_radio2"
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_vert"/&gt;
+        &lt;RadioButton 
+            android:id="@+id/bouton_radio3"
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_bleu"/&gt;
+    &lt;/RadioGroup&gt;
+    &lt;TextView 
+        android:id="@+id/zone_couleur" 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/&gt;
+&lt;/LinearLayout&gt;
+</pre>
+
+<p>
+Le fichier de chaînes est presque le même que dans le projet précédent (seul le nom de l'application est différent).
+</p>
+
+<span class="fichier">res/values/strings.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Couleurs 2&lt;/string&gt;
+    &lt;string name="label_rouge"&gt;Rouge&lt;/string&gt;
+    &lt;string name="label_vert"&gt;Vert&lt;/string&gt;
+    &lt;string name="label_bleu"&gt;Bleu&lt;/string&gt;
+&lt;/resources&gt;
+</pre>
+
+<p>
+Dans les prochains exemples, on veut changer aléatoirement la couleur de la zone de texte en cliquant sur un bouton.
+</p>
+<p>
+Nous utiliserons encore un gestionnaire dans une classe interne nommée (ou non anonyme) qui implémente View.OnClickListener (préparation au projet Couleur 4)
+</p>
+<hr>
+
+<h2>Le projet Couleurs 3</h2>
+
+<span class="fichier">com.prog101.couleurs3.MainActivity.java</span>
+<pre>package com.prog101.couleurs3;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import java.util.*;
+
+<span class="comment">/*
+ * Utilisation d'une classe interne nommée comme gestionnaire d'un
+ * événement unique. Pour préparer à l'exemple 4.
+ */</span>
+
+public class MainActivity extends Activity {
+    private View mZoneCouleur;
+    private int[] mChoixCouleur =
+        { Color.BLACK, Color.BLUE, Color.CYAN,
+          Color.DKGRAY, Color.GRAY, Color.GREEN,
+          Color.LTGRAY, Color.MAGENTA, Color.RED,
+          Color.WHITE, Color.YELLOW };
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        mZoneCouleur = findViewById(R.id.zone_couleur);
+        Button bouton = (Button)findViewById(R.id.bouton);
+        bouton.setOnClickListener(<span class="explication">new PeintreMagique()</span>);
+    }
+    
+    <span class="comment">// méthode privée car seulement appelée par une classe interne</span>
+    private void peindreRegion(int couleur) {
+        mZoneCouleur.setBackgroundColor(couleur);
+    }
+    
+    <span class="comment">// la classe interne nommée est privée</span>
+    <span class="explication">private class PeintreMagique implements OnClickListener {    
+
+        @Override
+        public void onClick(View vue) {
+            Random generator = new Random();
+            int index = generator.nextInt(mChoixCouleur.length);
+            peindreRegion(mChoixCouleur[index]);
+        }
+    }</span>
+}
+</pre>
+
+<p>
+Les fichiers de ressources&nbsp;:
+</p>
+<span class="fichier">res/layout/activity_main.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    &lt;Button 
+        android:id="@+id/bouton"
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:text="@string/label_bouton"/&gt;
+    &lt;TextView 
+        android:id="@+id/zone_couleur" 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/&gt;
+&lt;/LinearLayout&gt;
+</pre>
+
+<span class="fichier">res/values/strings.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Couleurs 3&lt;/string&gt;
+    &lt;string name="label_bouton"&gt;Couleur magique&lt;/string&gt;
+&lt;/resources&gt;
+</pre>
+
+<p>
+Interface utilisateur des projets Couleurs 3 à Couleurs 6&nbsp;:
+</p>
+<p>
+<img src="./Gestion des événements_files/couleurs3.png">
+</p>
+<hr>
+
+<h2>Gestionnaire dans une classe interne anonyme</h2>
+<p>
+Nous utiliserons maintenant un gestionnaire dans une classe interne anonyme (sans nom) qui implémente toujours View.OnClickListener
+</p>
+
+<h3>Avantages</h3>
+<ul>
+<li>En supposant que chaque classe gestionnaire s'applique à un seul contrôle, les avantages sont les mêmes que pour la classe interne nommée, le code est seulement un peu plus court</li>
+<li>Approche largement utilisée avec Swing, AWT, SWT et GWT</li>
+</ul>
+<h3>Inconvénients</h3>
+<ul>
+<li>Si on applique le gestionnaire à plus d'un contrôle, il faudra faire du copier-coller du code du gestionnaire (<em>soupir...</em>), il s'agit donc d'une approche devant être appliqué à un seul contrôle</li>
+<li>Si le code du gestionnaire est long, il devient difficile à lire lorsque placé "inline", cette approche devrait être utilisée seulement si le code du gestionnaire est court</li>
+</ul>
+<hr>
+
+<h2>Le projet Couleurs 4</h2>
+
+<span class="fichier">com.prog101.couleurs4.MainActivity.java</span>
+<pre>package com.prog101.couleurs4;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import java.util.*;
+
+<span class="comment">/*
+ * Utilisation d'une classe interne anonyme comme gestionnaire
+ * d'un événement unique.
+ */</span>
+
+public class MainActivity extends Activity {
+    private View mZoneCouleur;
+    private int[] mChoixCouleur =
+        { Color.BLACK, Color.BLUE, Color.CYAN,
+          Color.DKGRAY, Color.GRAY, Color.GREEN,
+          Color.LTGRAY, Color.MAGENTA, Color.RED,
+          Color.WHITE, Color.YELLOW };
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        mZoneCouleur = findViewById(R.id.zone_couleur);
+        Button bouton = (Button)findViewById(R.id.bouton);
+        
+        <span class="comment">// définit et instancie le gestionnaire en une opération</span>
+        bouton.setOnClickListener(<span class="explication">new OnClickListener() {    
+            @Override
+            public void onClick(View vue) {
+                Random generator = new Random();
+                int index = generator.nextInt(mChoixCouleur.length);
+                peindreRegion(mChoixCouleur[index]);
+            }
+        }</span>);
+    }
+    
+    <span class="comment">// méthode privée car seulement appelée par une classe interne</span>
+    private void peindreRegion(int couleur) {
+        mZoneCouleur.setBackgroundColor(couleur);
+    }
+}
+</pre>
+
+<span class="fichier">res/layout/activity_main.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    &lt;Button 
+        android:id="@+id/bouton"
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:text="@string/label_bouton"/&gt;
+    &lt;TextView 
+        android:id="@+id/zone_couleur" 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/&gt;
+&lt;/LinearLayout&gt;
+</pre>
+
+<span class="fichier">res/values/strings.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Couleurs 4&lt;/string&gt;
+    &lt;string name="label_bouton"&gt;Couleur magique&lt;/string&gt;
+&lt;/resources&gt;
+</pre>
+<hr>
+
+<h2>Gestionnaire dans l'activité principale qui implémente la classe écouteur (listener)</h2>
+<p>
+Nous utiliserons maintenant un gestionnaire directement dans l'activité principale.
+</p>
+
+<h3>Avantages</h3>
+<ul>
+<li>En supposant que l'application n'a qu'un seul contrôle qui utilise ce type d'écouteur, il s'agit de l'approche la plus courte et la plus simple
+</li>
+</ul>
+<h3>Inconvénients</h3>
+<ul>
+<li>Peu pratique s'il y a plusieurs contrôles qui utilisent ce type d'écouteur, à moins qu'ils n'aient un comportement identique, autrement il faudra une cascades de "if" pour déterminer sur lequel des contrôles a déclenché l'événement</li>
+<li>Impossible de passer des paramètres au gestionnaire</li>
+</ul>
+<hr>
+
+<h2>Le projet Couleurs 5</h2>
+
+<span class="fichier">com.prog101.couleurs5.MainActivity.java</span>
+<pre>package com.prog101.couleurs5;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import java.util.*;
+
+<span class="comment">/*
+ * Gestion des événements par l'activité principale qui implémente un
+ * "listener".
+ */</span>
+
+public class MainActivity extends Activity <span class="explication">implements OnClickListener</span> {
+    private View mZoneCouleur;
+    private int[] mChoixCouleur =
+        { Color.BLACK, Color.BLUE, Color.CYAN,
+          Color.DKGRAY, Color.GRAY, Color.GREEN,
+          Color.LTGRAY, Color.MAGENTA, Color.RED,
+          Color.WHITE, Color.YELLOW };
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        mZoneCouleur = findViewById(R.id.zone_couleur);
+        Button bouton = (Button)findViewById(R.id.bouton);
+        bouton.<span class="explication">setOnClickListener(this)</span>;
+    }
+    
+    private void peindreRegion(int couleur) {
+        mZoneCouleur.setBackgroundColor(couleur);
+    }
+    
+    @Override
+    public void onClick(View vue) {
+        Random generator = new Random();
+        int index = generator.nextInt(mChoixCouleur.length);
+        peindreRegion(mChoixCouleur[index]);
+    }
+}
+</pre>
+
+<p>
+Même chose que pour le projet précédent.
+</p>
+<span class="fichier">res/layout/activity_main.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    &lt;Button 
+        android:id="@+id/bouton"
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:text="@string/label_bouton"/&gt;
+    &lt;TextView 
+        android:id="@+id/zone_couleur" 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/&gt;
+&lt;/LinearLayout&gt;
+</pre>
+
+<p>
+Même chose que pour le projet précédent (ou presque).
+</p>
+<span class="fichier">res/values/strings.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Couleurs 5&lt;/string&gt;
+    &lt;string name="label_bouton"&gt;Couleur magique&lt;/string&gt;
+&lt;/resources&gt;
+</pre>
+<hr>
+
+<h2>Gestionnaire dans l'activité principale avec spécification de la méthode dans le fichier de mise en page (layout)</h2>
+
+<p>
+Il s'agit de mettre seulement le gestionnaire dans l'activité principale, sans implémenter un écouteur ou appeler "setOnClickListener".
+</p>
+<p>
+On laisse le fichier de mise en page (layout) spécifier la méthode gestionnaire par le biais de l'attribut "android:onClick".
+</p>
+
+<h3>Avantages</h3>
+<ul>
+<!--
+<li>En supposant que l'application n'a qu'un seul contrôle qui utilise ce type d'écouteur, mêmes avantages (code court et simple) que l'approche précédente où la méthode principale implémente l'interface</li>
+-->
+<li>Approche préférée de ceux qui préfèrent mettre la plus grande partie de l'information dans les fichiers XML</li>
+<li>Moins limité que l'approche précédente puisqu'il est possible de spécifier différents noms de méthodes pour différents contrôles</li>
+</ul>
+<h3>Inconvénients</h3>
+<ul>
+<li>Impossible de passer des paramètres au gestionnaire</li>
+<li>Plus difficile pour le développeur Java de savoir quelle méthode est le gestionnaire de quel contrôle</li>
+<li>Utilisation impossible de l'annotation @Override (le gestionnaire n'est pas une méthode redéfinie), certaines erreurs seront détectées seulement à l'exécution</li>
+</ul>
+<hr>
+
+<h2>Le projet couleurs 6</h2>
+
+<span class="fichier">com.prog101.couleurs6.MainActivity.java</span>
+<pre>package com.prog101.couleurs6;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+
+import java.util.*;
+
+<span class="comment">/*
+ * Gestion des événements par l'activité principale avec assignation
+ * du gestionnaire dans le fichier de mise en page (layout).
+ */</span>
+
+public class MainActivity extends Activity {
+    private View mZoneCouleur;
+    private int[] mChoixCouleur =
+        { Color.BLACK, Color.BLUE, Color.CYAN,
+          Color.DKGRAY, Color.GRAY, Color.GREEN,
+          Color.LTGRAY, Color.MAGENTA, Color.RED,
+          Color.WHITE, Color.YELLOW };
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        mZoneCouleur = findViewById(R.id.zone_couleur);
+    }
+    
+    private void peindreRegion(int couleur) {
+        mZoneCouleur.setBackgroundColor(couleur);
+    }
+    
+    <span class="comment">// la méthode doit être "public void", avoir un paramètre de
+    // type View, mais n'a pas d'obligation d'implémenter une
+    // interface donnée</span>
+    <span class="explication">public void colorier(View vue)</span> {
+        Random generator = new Random();
+        int index = generator.nextInt(mChoixCouleur.length);
+        peindreRegion(mChoixCouleur[index]);
+    }
+}
+</pre>
+
+<p>
+Même chose que pour le projet précédent, sauf pour l'assignation d'un gestionnaire.
+</p>
+<span class="fichier">res/layout/activity_main.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    &lt;Button 
+        <span style="text-decoration: line-through; color: red;">android:id="@+id/bouton"</span>
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:text="@string/label_bouton"
+        <span class="explication">android:onClick="colorier"</span>/&gt;
+    &lt;TextView 
+        android:id="@+id/zone_couleur" 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/&gt;
+&lt;/LinearLayout&gt;
+</pre>
+
+<p>
+Même chose que pour le projet précédent, sauf pour le nom de l'application.
+</p>
+<span class="fichier">res/values/strings.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Couleurs 6&lt;/string&gt;
+    &lt;string name="label_bouton"&gt;Couleur magique&lt;/string&gt;
+&lt;/resources&gt;
+</pre>
+<hr>
+
+<p>
+Dernière modification le 14 avril 2015.
+</p>
+</div>
+
+</body></html>

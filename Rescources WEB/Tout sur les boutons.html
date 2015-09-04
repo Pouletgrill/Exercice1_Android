@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://prog101.com/modules/and/boutons.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<link href="./Tout sur les boutons_files/android.css" rel="stylesheet">
+<script src="./Tout sur les boutons_files/some-script.js"></script>
+<title>Tout sur les boutons</title>
+</head>
+
+<body>
+<div class="page">
+<h1>Tout sur les boutons</h1>
+
+<h2>Au menu</h2>
+<ul>
+<li>Boutons</li>
+<li>Boutons image avec une seule image</li>
+<li>Boutons image avec trois images (normal, "focus", pressé)</li>
+<li>Boutons radio avec un gestionnaire pour chacun</li>
+<li>Boutons radio avec un gestionnaire pour le groupe</li>
+<li>Boîtes à cocher</li>
+<li>Boutons bascule (toggle)</li>
+</ul>
+<hr>
+
+<h2>Le composant Button</h2>
+<p>
+Un bouton ordinaire avec du texte écrit dessus
+</p>
+<p>
+Son gestionnaire implémente View.OnClickListener (redéfinit onClick)
+</p>
+<p>
+Sauf si le gestionnaire est assigné dans le fichier XML 
+</p>
+
+<p>
+Attributs XML importants :
+</p>
+<p>
+<strong>android:text</strong> - label du bouton (peut aussi être manipulé en Java avec setText et getText)
+</p>
+<p>
+<strong>android:onClick</strong> - méthode de gestion de l'événement
+</p>
+<pre>&lt;Button
+    <span class="explication">android:text="@string/label_pizza"</span>
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    <span class="explication">android:onClick="afficherLabelBouton"</span>/&gt;
+</pre>
+<hr>
+
+<h2>Le composant ImageButton</h2>
+<p>
+Un bouton avec une image dessus
+</p>
+<p>
+Son gestionnaire implémente View.OnClickListener (redéfinit onClick)
+</p>
+<p>
+Attributs XML importants :
+</p>
+<p>
+<strong>android:src</strong> - image du bouton (peut aussi être manipulé en Java avec setImageDrawable)
+</p>
+<p>
+Utilise le "base name" (nom du fichier moins l'extension) d'une image dans le dossier res/drawable
+</p>
+<p>
+Les images peuvent être de format png, jpeg, gif ou bmp
+</p>
+<p>
+<strong>android:onClick</strong> - méthode de gestion de l'événement
+</p>
+<pre>&lt;ImageButton 
+    android:contentDescription="@string/description_bouton"
+    <span class="explication">android:src="@drawable/android_platform"</span>
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:onClick="afficherInfosBoutonImage1"/&gt;
+</pre>
+<hr>
+
+<h2>Le composant ImageButton avec trois images</h2>
+<p>
+Un bouton qui affiche dessus une image différente selon la situation
+</p>
+<p>
+Son gestionnaire implémente View.OnClickListener (redéfinit onClick)
+</p>
+<p>
+Attributs XML importants :
+</p>
+<p>
+<strong>android:src</strong> - fichier de description de l'image du bouton
+</p>
+<p>
+Utilise le "base name" (nom du fichier moins l'extension) d'un fichier XML dans le dossier res/drawable
+</p>
+<p>
+Le fichier réfère à des images dans le même dossier
+</p>
+<p>
+<strong>android:onClick</strong> - méthode de gestion de l'événement
+</p>
+<hr>
+
+<h2>Images individuelles vs fichier d'images</h2>
+<p>
+Si une seule image est utilisée, Android changera la couleur d'arrière-plan (s'il y a des pixels transparents) selon la situation&nbsp;: bouton normal, avec "focus" ou pressé
+</p>
+<p>
+Dans le cas d'un fichier d'images, une image différente sera utilisée pour chaque situation (l'arrière-plan n'a plus d'importance)
+</p>
+<p>
+Exemple de fichier de description d'images&nbsp;:
+</p>
+
+<span id="ici" class="fichier">res/drawable/button_android.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;item android:state_pressed="true"
+          android:drawable="@drawable/android_pressed" /&gt;
+    &lt;item android:state_focused="true"
+          android:drawable="@drawable/android_focused" /&gt;
+    &lt;item android:drawable="@drawable/android_normal" /&gt;
+&lt;/selector&gt;
+</pre>
+<hr>
+
+<h2>Le composant RadioButton</h2>
+<p>
+Possède deux états (comme une case à cocher)
+</p>
+<p>
+Généralement utilisé avec un écouteur (listener) par bouton (View.OnClickListener)
+</p>
+<p>
+Aussi utilisé avec un seul écouteur pour tout le groupe de boutons (permet de déterminer la sélection courante et la sélection précédente)
+</p>
+<p>
+Aussi, mais plus rarement, sans écouteur (à un moment donné on peut demander au groupe quel est la sélection courante)
+</p>
+<hr>
+
+<h2>Le composant RadioGroup</h2>
+<p>
+Genre de LinearLayout pour regrouper des boutons
+</p>
+<p>
+Rend la sélection exclusive (le bouton radio n'a plus seulement l'aspect, mais aussi le comportement d'un bouton radio)
+</p>
+<p>
+On utilise le gestionnaire RadioGroup.OnCheckedChangeListener pour connaître la sélection courante ou la sélection précédente
+</p>
+<p>
+On utilise la méthode getCheckedRadioButtonId s'il n'est pas nécessaire de répondre immédiatement, mais seulement de connaître la sélection courante
+</p>
+<p>
+Il faut donner un id au groupe dans le fichier XML et passer par Java pour assigner un OnCheckedChangeListener (pas de android:onKetchose)
+</p>
+<pre>&lt;RadioGroup 
+    android:gravity="center_horizontal" 
+    android:layout_height="wrap_content" 
+    android:layout_width="match_parent" 
+    android:orientation="horizontal"&gt;
+    &lt;RadioButton 
+        android:layout_height="wrap_content" 
+        android:layout_width="wrap_content"
+        android:text="@string/label_biere"
+        android:onClick="afficherLabelBouton"/&gt; 
+</pre>
+<hr>
+
+<h2>Le composant CheckBox</h2>
+<p>
+Peut être vu comme un bouton à deux états (coché ou non) avec une indication visuelle de l'état
+</p>
+<p>
+En Java on utilise isChecked() pour déterminer l'état et setChecked() pour le modifier par programmation
+</p>
+<p>
+Généralement utilisé avec un écouteur (View.OnClickListener)
+</p>
+<p>
+Aussi sans écouteur (à un moment donné on peut vérifier si la boîte est cochée ou non)
+</p>
+<pre>&lt;CheckBox 
+    android:text="@string/label_beigne" 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:onClick="afficherLabelBouton"/&gt;
+</pre>
+<hr>
+
+<h2>Le composant ToggleButton</h2>
+<p>
+C'est un bouton à bascule
+</p>
+<p>
+Possède deux états (activé ou désactivé) avec une indication visuelle de l'état (apparence et textes différents)
+</p>
+<p>
+En Java on utilise isChecked() pour déterminer l'état et setChecked() pour le modifier par programmation
+</p>
+<p>
+Généralement utilisé avec un écouteur (View.OnClickListener)
+</p>
+<p>
+Aussi sans écouteur (à un moment donné on peut vérifier si le bouton est activé ou non)
+</p>
+<p>
+Attributs XML importants :
+</p>
+<p>
+<strong>android:textOn</strong>, <strong>android:textOff</strong> - texte selon l'état (ON et OFF par défaut)
+</p>
+<pre>&lt;ToggleButton 
+    <span class="explication">android:textOn="@string/bascule_sauce_on"</span>
+    <span class="explication">android:textOff="@string/bascule_sauce_off"</span>
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:onClick="afficherInfosBoutonBascule"/&gt;
+</pre>
+<hr>
+
+<h2>Le projet Widgets</h2>
+<div style="border: solid red 1px; padding: 10px; color: red;">
+<strong>AVERTISSEMENT</strong><br>
+Les exemples de code présentés ici ont été développés avec Eclipse à l'automne 2014 et utilisent la classe Activity plutôt que ActionBarActivity.
+</div>
+
+<h3>Fichiers à éditer/ajouter</h3>
+<ul>
+<li>ButtonActivity.java (activité principale)</li>
+<li>activity_button.xml (mise en page ou "layout")</li>
+<li>strings.xml (chaînes de caractères)</li>
+<li>button_android.xml (spécification des images à utiliser pour un bouton)</li>
+<li>button_dialog.xml (idem)</li>
+<li>button_rating_star.xml (idem)</li>
+</ul>
+
+<h3>Images</h3>
+<p>
+<a href="http://prog101.com/modules/and/images/android_platform.png">android_platform.png</a><br>
+<a href="http://prog101.com/modules/and/images/camera_phone.png">camera_phone.png</a><br>
+<a href="http://prog101.com/modules/and/images/gps.png">gps.png</a><br>
+<br>
+<a href="http://prog101.com/modules/and/images/android_focused.png">android_focused.png</a><br>
+<a href="http://prog101.com/modules/and/images/android_normal.png">android_normal.png</a><br>
+<a href="http://prog101.com/modules/and/images/android_pressed.png">android_pressed.png</a><br>
+<br>
+<a href="http://prog101.com/modules/and/images/dialog_focused.png">dialog_focused.png</a><br>
+<a href="http://prog101.com/modules/and/images/dialog_normal.png">dialog_normal.png</a><br>
+<a href="http://prog101.com/modules/and/images/dialog_pressed.png">dialog_pressed.png</a><br>
+<br>
+<a href="http://prog101.com/modules/and/images/rating_star_focused.png">rating_star_focused.png</a><br>
+<a href="http://prog101.com/modules/and/images/rating_star_normal.png">rating_star_normal.png</a><br>
+<a href="http://prog101.com/modules/and/images/rating_star_pressed.png">rating_star_pressed.png</a><br>
+</p>
+
+<h3>Interface utilisateur</h3>
+<p>
+Sur un Nexus One :
+</p>
+<p>
+<img src="./Tout sur les boutons_files/boutons.png">
+</p>
+
+<p>
+Le fichier de mise en page :
+</p>
+<span class="fichier">res/layout/activity_button.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    
+    &lt;!-- boutons ordinaires --&gt;
+    &lt;LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"&gt;
+        &lt;Button 
+            android:text="@string/label_biere" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherLabelBouton"/&gt;
+        &lt;Button 
+            android:text="@string/label_pizza" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherLabelBouton"/&gt;
+        &lt;Button 
+            android:text="@string/label_beigne" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherLabelBouton"/&gt;
+    &lt;/LinearLayout&gt;
+    
+    &lt;!-- boutons images --&gt;
+    &lt;LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"&gt;
+        &lt;ImageButton 
+            android:contentDescription="@string/description_bouton"
+            android:src="@drawable/android_platform"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage1"/&gt;
+        &lt;ImageButton 
+            android:contentDescription="@string/description_bouton"
+            android:src="@drawable/camera_phone"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage2"/&gt;
+        &lt;ImageButton 
+            android:contentDescription="@string/description_bouton"
+            android:src="@drawable/gps"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage3"/&gt;
+    &lt;/LinearLayout&gt;
+    
+    &lt;!-- boutons images multiples --&gt;
+    &lt;LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:gravity="center"&gt;
+        &lt;ImageButton 
+            android:contentDescription="@string/description_bouton"
+            android:src="@drawable/button_android"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage4"/&gt;
+        &lt;ImageButton 
+            android:contentDescription="@string/description_bouton"
+            android:src="@drawable/button_dialog"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage5"/&gt;
+        &lt;ImageButton 
+            android:contentDescription="@string/description_bouton"
+            android:src="@drawable/button_rating_star"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage6"/&gt;
+    &lt;/LinearLayout&gt;
+    
+    &lt;!-- boutons radio --&gt;
+    &lt;RadioGroup 
+        android:gravity="center_horizontal" 
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:orientation="horizontal"&gt;
+        &lt;RadioButton 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_biere"
+            android:onClick="afficherLabelBouton"/&gt; 
+        &lt;RadioButton 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_pizza"
+            android:onClick="afficherLabelBouton"/&gt;
+        &lt;RadioButton 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_beigne"
+            android:onClick="afficherLabelBouton"/&gt;
+    &lt;/RadioGroup&gt;
+    
+    &lt;!-- boutons radio avec gestionnaire assigné dans le code Java --&gt;
+    &lt;RadioGroup 
+        android:id="@+id/radio_group"
+        android:gravity="center_horizontal" 
+        android:layout_height="wrap_content" 
+        android:layout_width="match_parent" 
+        android:orientation="horizontal"&gt;
+        &lt;RadioButton 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_biere"/&gt; 
+        &lt;RadioButton 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_pizza"/&gt;
+        &lt;RadioButton 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:text="@string/label_beigne"/&gt;
+    &lt;/RadioGroup&gt;
+    
+    &lt;!-- boîtes à cocher --&gt;
+    &lt;LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"&gt;
+        &lt;CheckBox 
+            android:text="@string/label_biere" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherLabelBouton"/&gt;
+        &lt;CheckBox 
+            android:text="@string/label_pizza" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherLabelBouton"/&gt;
+        &lt;CheckBox 
+            android:text="@string/label_beigne" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherLabelBouton"/&gt;
+    &lt;/LinearLayout&gt;
+    
+    &lt;!-- boutons bascule --&gt;
+    &lt;LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"&gt;
+
+        &lt;!--  utilise les étiquettes par défaut (ON/OFF) --&gt;
+        &lt;ToggleButton 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonBascule"/&gt;
+         
+        &lt;ToggleButton 
+            android:textOn="@string/bascule_reseau_on" 
+            android:textOff="@string/bascule_reseau_off"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonBascule"/&gt;
+        &lt;ToggleButton 
+            android:textOn="@string/bascule_sauce_on" 
+            android:textOff="@string/bascule_sauce_off"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonBascule"/&gt;
+    &lt;/LinearLayout&gt;
+&lt;/LinearLayout&gt;
+
+</pre>
+
+<p>
+Le fichier de chaînes :
+</p>
+<span class="fichier">res/values/strings.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Le merveilleux monde des widgets&lt;/string&gt;
+    
+    &lt;string name="label_biere"&gt;Bière&lt;/string&gt;
+    &lt;string name="label_pizza"&gt;Pizza&lt;/string&gt;
+    &lt;string name="label_beigne"&gt;Beigne&lt;/string&gt;
+    
+    &lt;string name="gabarit_message_bouton"&gt;        
+       Vous avez cliqué sur le widget \'%s\'.
+    &lt;/string&gt;
+    &lt;string name="gabarit_message_bouton_image"&gt;
+       Vous avez cliqué sur le bouton image qui affiche %s.
+    &lt;/string&gt;
+    
+    &lt;string name="image_bouton_image_1"&gt;
+        Bugdroid
+    &lt;/string&gt;
+    &lt;string name="image_bouton_image_2"&gt;
+        un téléphone
+    &lt;/string&gt;
+    &lt;string name="image_bouton_image_3"&gt;
+        un GPS
+    &lt;/string&gt;
+    &lt;string name="image_bouton_image_4"&gt;
+        le \'drawable\' défini dans button_android.xml
+    &lt;/string&gt;
+    &lt;string name="image_bouton_image_5"&gt;
+        le \'drawable\' défini dans button_dialog.xml
+    &lt;/string&gt;
+    &lt;string name="image_bouton_image_6"&gt;
+        le \'drawable\' défini dans button_rating_star.xml
+    &lt;/string&gt;
+    
+    &lt;string name="gabarit_message_nouvelle_selection"&gt;
+        Vous avez sélectionné le bouton radio \'%s\'.
+        Il n\'y avait pas de sélection précédente.
+    &lt;/string&gt;
+    &lt;string name="gabarit_message_selection_changee" formatted="false"&gt;
+        Vous avez sélectionné le bouton radio \'%s\'.
+        La sélection précédente était \'%s\'.
+    &lt;/string&gt;
+    
+    &lt;string name="bascule_reseau_on"&gt;En ligne&lt;/string&gt;
+    &lt;string name="bascule_reseau_off"&gt;Hors ligne&lt;/string&gt;
+    &lt;string name="bascule_sauce_on"&gt;Avec sauce&lt;/string&gt;
+    &lt;string name="bascule_sauce_off"&gt;Pas de sauce&lt;/string&gt;
+    &lt;string name="gabarit_message_bouton_bascule" formatted="false"&gt;
+        Vous avez basculé le bouton à %s. Le label est maintenant \'%s\'.
+    &lt;/string&gt;
+    
+    &lt;!-- exigé pour des raisons d'accessibilité --&gt;
+    &lt;string name="description_bouton"&gt;Ceci est un bouton&lt;/string&gt;
+    
+&lt;/resources&gt;
+</pre>
+
+<p>
+Le code Java de l'activité principale :
+</p>
+<span class="fichier">com.prog101.widgets.ButtonActivity.java</span>
+<pre>package com.prog101.widgets;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+public class ButtonActivity extends Activity {
+    
+    // gabarits (templates) pour les messages
+    private String mGabaritMessageBouton;
+    private String mGabaritMessageBoutonImage;
+    private String mGabaritMessageBoutonBascule;
+    
+    // point d'entrée de l'application
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        // récupération de la mise en page depuis le fichier
+        // res/layout/activity_button.xml  
+        setContentView(R.layout.activity_button);
+        
+        // récupération des gabarits de messages depuis le fichier
+        // res/values/strings.xml
+        mGabaritMessageBouton = 
+                getString(R.string.gabarit_message_bouton);
+        mGabaritMessageBoutonImage = 
+                getString(R.string.gabarit_message_bouton_image);
+        mGabaritMessageBoutonBascule = 
+                getString(R.string.gabarit_message_bouton_bascule);
+        
+        // assignation d'un gestionnaire pour le groupe de boutons radio
+        RadioGroup radioGroup = 
+                (RadioGroup)findViewById(R.id.radio_group);
+        radioGroup.setOnCheckedChangeListener(new InfosRadioGroup());
+    }
+    
+    // affiche un toast avec le label du bouton
+    public void afficherLabelBouton(View bouton) { 
+        Button button = (Button)bouton;
+        // récupère le label du bouton
+        CharSequence texte = button.getText();
+        // construit le message à partir du gabarit
+        String message = String.format(mGabaritMessageBouton, texte);
+        showToast(message);
+    }
+    
+    // la méthode précédente ne peut être utilisée pour un ImageButton
+    // (ne dérive pas de Button)
+    public void afficherInfosBoutonImage1(View bouton) {
+        afficherInfosBoutonImage(R.string.image_bouton_image_1);
+    }
+    
+    public void afficherInfosBoutonImage2(View bouton) {
+        afficherInfosBoutonImage(R.string.image_bouton_image_2);
+    }
+    
+    public void afficherInfosBoutonImage3(View bouton) {
+        afficherInfosBoutonImage(R.string.image_bouton_image_3);
+    }
+    
+    public void afficherInfosBoutonImage4(View bouton) {
+        afficherInfosBoutonImage(R.string.image_bouton_image_4);
+    }
+    
+    public void afficherInfosBoutonImage5(View bouton) {
+        afficherInfosBoutonImage(R.string.image_bouton_image_5);
+    }
+    
+    public void afficherInfosBoutonImage6(View bouton) {
+        afficherInfosBoutonImage(R.string.image_bouton_image_6);
+    }
+    
+    // utilisé par le méthodes  précédentes
+    private void afficherInfosBoutonImage(int idImage) {
+        String texte = getString(idImage);
+        String message =
+                String.format(mGabaritMessageBoutonImage, texte);
+        showToast(message);
+    }
+    
+    // affiche un toast sur l'état du bouton bascule
+    public void afficherInfosBoutonBascule(View boutonBascule) { 
+
+        // récupération de l'état du bouton
+        ToggleButton bouton = (ToggleButton)boutonBascule;
+        String etat = "off";
+        if (bouton.isChecked()) {
+            etat = "on";
+        }
+        
+        // affichage de l'information
+        CharSequence label = bouton.getText();
+        String message =
+                String.format(mGabaritMessageBoutonBascule, etat, label);
+        showToast(message);
+    }
+    
+    // affiche un court message
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        // essayer aussi Toast.LENGTH_SHORT
+    }
+    
+    // classe qui implémente le gestionnaire de boutons radio
+    private class InfosRadioGroup implements OnCheckedChangeListener {
+        
+        private RadioButton mDerniereSelection;
+        private String mGabaritMessageNouvelleSelection;
+        private String mGabaritMesssageSelectionChangee;
+        
+        // récupération des gabarits par le constructeur
+        public InfosRadioGroup() {
+            mGabaritMessageNouvelleSelection = 
+                    getString(R.string.gabarit_message_nouvelle_selection);
+            mGabaritMesssageSelectionChangee = 
+                    getString(R.string.gabarit_message_selection_changee);
+        }
+        
+        // gestionnaire (handler)
+        @Override
+        public void onCheckedChanged(RadioGroup groupe, int idBouton) {
+            
+            RadioButton nouvelleSelection =
+                    (RadioButton)findViewById(idBouton);
+            String message;
+            
+            if (mDerniereSelection == null) { // c'est la première fois
+                message = String.format(mGabaritMessageNouvelleSelection, 
+                        nouvelleSelection.getText());
+            } else {
+                message = String.format(mGabaritMesssageSelectionChangee, 
+                        nouvelleSelection.getText(),
+                        mDerniereSelection.getText());
+            }
+            mDerniereSelection = nouvelleSelection;
+            showToast(message);
+        }
+    }   
+}
+</pre>
+
+<p>
+Les fichiers d'images (attention, il y en a un autre <a href="http://prog101.com/modules/and/boutons.html#ici">ici</a>) :
+</p>
+<span class="fichier">res/drawable/button_dialog.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;item android:state_pressed="true"
+          android:drawable="@drawable/dialog_pressed" /&gt;
+    &lt;item android:state_focused="true"
+          android:drawable="@drawable/dialog_focused" /&gt;
+    &lt;item android:drawable="@drawable/dialog_normal" /&gt;
+&lt;/selector&gt;
+</pre>
+
+<span class="fichier">res/drawable/button_rating_star.xml</span>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;item android:state_pressed="true"
+          android:drawable="@drawable/rating_star_pressed" /&gt;
+    &lt;item android:state_focused="true"
+          android:drawable="@drawable/rating_star_focused" /&gt;
+    &lt;item android:drawable="@drawable/rating_star_normal" /&gt;
+&lt;/selector&gt;
+</pre>
+<hr>
+
+<p>
+Dernière modification le 16 avril 2015
+</p>
+</div>
+
+</body></html>

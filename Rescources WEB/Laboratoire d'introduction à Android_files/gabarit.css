@@ -1,0 +1,176 @@
+body {
+   margin: 0px;
+   background: #eee;
+   font-family: 'Open Sans';
+   }
+pre {
+   font-size: 1.2em;
+}
+ol.som {
+   padding-left: 20px;
+}
+ul.som {
+   padding-left: 20px;
+   list-style-type: circle;
+}
+.centre {
+   max-width: 1024px;
+   margin: auto;
+   }
+.droite {
+   float: right;
+   }
+.ligne {
+   padding: 1px;
+   background: #000;
+   }
+.coulmenu {
+   background: #000;
+   color: white;
+   }
+.coulcours {
+   background: #066;
+   color: white;
+   }
+.coultexte {
+   background: #fff;
+   }
+.coulbarresup {
+   background: #eee;
+   color: black;
+   }
+.nouveau {
+   padding-left: 5px;
+   padding-right: 5px;
+   background: red;
+   color: white;
+   font-size: 0.8em;
+   font-weight: bold;
+   }
+#barresup {
+   padding: 8px 0px;
+   }
+#siteweb {
+   font-size: 1.8em;
+   font-weight: bold;
+   }
+#usager {
+   padding-right: 20px;
+   font-weight: bold;
+   }
+#menu {
+   padding: 8px 0px;
+   }
+#nocours {
+   padding-top: 16px;
+   font-size: 3.2em;
+   }
+#titrecours {
+   padding-bottom: 20px;
+   font-size: 2.0em;
+   }
+#contenu {
+   /*margin-right: 240px;*/
+   padding: 20px 20px 20px 0px;
+   text-align: justify;
+   }
+#contenuavecsomm {
+   margin-right: 240px;
+   padding: 20px 20px 20px 0px;
+   text-align: justify;
+   }
+#sommaire {
+   width: 240px;
+   padding: 20px 0px 20px 20px; 
+   float: right;
+   }
+#basdepage {
+   padding: 10px 0px;
+   clear: both;
+   }
+a.m:link {
+    color: #fff;
+    text-decoration: none;
+}
+a.m:visited {
+    color: #fff;
+    text-decoration: none;
+}
+a.m:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+a.m:active {
+    color: #fff;
+    text-decoration: underline;
+}
+.jaune {
+   margin-bottom: 10px;
+   padding: 0px 10px 0px 10px;
+   /*padding-left: 20px;
+   padding-right: 20px;*/
+   /*background: #ff9;*/
+   /*border: solid black 1px;*/
+   background: yellow;
+}
+/*
+.cours {
+   margin-bottom: 10px;
+   padding-left: 20px;
+   padding-right: 20px;
+   background: #f3f6ff;
+   border: solid #666 1px;
+}
+*/
+.section {
+   margin-bottom: 10px;
+   padding-left: 20px;
+   padding-right: 20px;
+   background: #eee;
+   border: solid #666 1px;
+}
+.question {
+    color: red;
+    font-style: italic;
+    font-weight: bold;
+}
+.reponse {
+}
+.surligne {
+    font-weight: bold;
+    background: yellow;
+}
+/* cours */
+.cours {
+    margin-top: 10px;
+    /*border-bottom: solid #999 1px;*/
+    background: #ffe;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 1px;
+}
+.tech {
+    margin-top: 10px;
+    /*border-bottom: solid #999 1px;*/
+    background: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 1px;
+    border-bottom: dotted #999 1px;
+    font-size: 0.9em;
+}
+/* news */
+article {
+    margin-top: 10px;
+    border-bottom: solid #999 1px;
+    background: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+article a {
+    font-size: 1.1em;
+    color: #c33;
+}
+article p {
+    margin-top: 5px;
+}

@@ -24,11 +24,9 @@ public class Palette extends AppCompatActivity {
         ToggleButton b2 = (ToggleButton)findViewById(R.id.ToggleButton2);
         ToggleButton b3 = (ToggleButton)findViewById(R.id.ToggleButton3);
 
-        // même gestionnaire pour boutons ordinaires et boutons radio,
-        // on passe la couleur et une référence à l'activité principale
-        b1.setOnClickListener(new Peintre(Color.RED, this));
-        b2.setOnClickListener(new Peintre(Color.GREEN, this));
-        b3.setOnClickListener(new Peintre(Color.BLUE, this));
+        b1.setOnClickListener(new Peintre(0x00FF0000, this, b1 ));
+        b2.setOnClickListener(new Peintre(0x0000FF00, this, b2));
+        b3.setOnClickListener(new Peintre(0x000000FF, this, b3));
     }
 
     @Override
