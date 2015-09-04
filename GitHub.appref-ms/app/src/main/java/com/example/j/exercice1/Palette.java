@@ -2,15 +2,33 @@ package com.example.j.exercice1;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.app.Activity;
+import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ToggleButton;
 
 public class Palette extends AppCompatActivity {
 
+    private View mZoneCouleur;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
+
+        mZoneCouleur = findViewById(R.id.zone_couleur);
+
+        ToggleButton b1 = (ToggleButton)findViewById(R.id.ToggleButton1);
+        ToggleButton b2 = (ToggleButton)findViewById(R.id.ToggleButton2);
+        ToggleButton b3 = (ToggleButton)findViewById(R.id.ToggleButton3);
+
+        // même gestionnaire pour boutons ordinaires et boutons radio,
+        // on passe la couleur et une référence à l'activité principale
+        b1.setOnClickListener(new Peintre(Color.RED, this));
+        b2.setOnClickListener(new Peintre(Color.GREEN, this));
+        b3.setOnClickListener(new Peintre(Color.BLUE, this));
     }
 
     @Override
@@ -18,6 +36,10 @@ public class Palette extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_palette, menu);
         return true;
+    }
+
+    public void peindreRegion(int couleur) {
+        mZoneCouleur.setBackgroundColor(couleur);
     }
 
     @Override
