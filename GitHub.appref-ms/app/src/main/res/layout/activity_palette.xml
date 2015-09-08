@@ -14,26 +14,23 @@
 
         <!--  utilise les étiquettes par défaut (ON/OFF) -->
         <ToggleButton
-            android:id="@+id/ToggleButton1"
             android:textOn="@string/rouge_on"
             android:textOff="@string/rouge_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="afficherInfosBoutonBascule"/>
+            android:onClick="afficherInfosBoutonBasculeR"/>
         <ToggleButton
-            android:id="@+id/ToggleButton2"
             android:textOn="@string/vert_on"
             android:textOff="@string/vert_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="afficherInfosBoutonBascule"/>
+            android:onClick="afficherInfosBoutonBasculeV"/>
         <ToggleButton
-            android:id="@+id/ToggleButton3"
             android:textOn="@string/bleu_on"
             android:textOff="@string/bleu_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="afficherInfosBoutonBascule"/>
+            android:onClick="afficherInfosBoutonBasculeB"/>
 
     </LinearLayout>
     <LinearLayout

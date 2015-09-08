@@ -7,11 +7,13 @@ import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class Palette extends AppCompatActivity {
 
     private View mZoneCouleur;
+    private int fontColor = Color.BLACK;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,14 +21,47 @@ public class Palette extends AppCompatActivity {
         setContentView(R.layout.activity_palette);
 
         mZoneCouleur = findViewById(R.id.zone_couleur);
-
-        ToggleButton b1 = (ToggleButton)findViewById(R.id.ToggleButton1);
-        ToggleButton b2 = (ToggleButton)findViewById(R.id.ToggleButton2);
-        ToggleButton b3 = (ToggleButton)findViewById(R.id.ToggleButton3);
-
-        b1.setOnClickListener(new Peintre(0x00FF0000, this, b1 ));
-        b2.setOnClickListener(new Peintre(0x0000FF00, this, b2));
-        b3.setOnClickListener(new Peintre(0x000000FF, this, b3));
+    }
+    //Rouge
+    public void afficherInfosBoutonBasculeR(View boutonBascule) {
+        ToggleButton bouton = (ToggleButton)boutonBascule;
+        if (bouton.isChecked()) {
+            fontColor = fontColor | 0x00FF0000;
+            peindreRegion(fontColor);
+        }
+        else
+        {
+            fontColor = fontColor & 0xFF00FFFF;
+            peindreRegion(fontColor);
+        }
+    }
+    //Vert
+    public void afficherInfosBoutonBasculeV(View boutonBascule) {
+        ToggleButton bouton = (ToggleButton)boutonBascule;
+        if (bouton.isChecked()) {
+            fontColor = fontColor | 0x0000FF00;
+            peindreRegion(fontColor);
+        }
+        else
+        {
+            fontColor = fontColor & 0xFFFF00FF;
+            peindreRegion(fontColor);
+        }
+    }
+    //Bleu
+    public void afficherInfosBoutonBasculeB(View boutonBascule) {
+        ToggleButton bouton = (ToggleButton)boutonBascule;
+        //Toast.makeText(getApplicationContext(),String.valueOf(fontColor),
+        //        Toast.LENGTH_SHORT).show();
+        if (bouton.isChecked()) {
+            fontColor = fontColor | 0x000000FF;
+            peindreRegion(fontColor);
+        }
+        else
+        {
+            fontColor = fontColor & 0xFFFFFF00;
+            peindreRegion(fontColor);
+        }
     }
 
     @Override
