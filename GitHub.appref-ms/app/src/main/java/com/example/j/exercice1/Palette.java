@@ -19,8 +19,8 @@ public class Palette extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
-
         mZoneCouleur = findViewById(R.id.zone_couleur);
+        peindreRegion(fontColor);
     }
     //Rouge
     public void afficherInfosBoutonBasculeR(View boutonBascule) {
