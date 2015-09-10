@@ -21,17 +21,83 @@ public class Citation extends AppCompatActivity {
 
     public void afficherInfosBoutonImage1(View bouton)
     {
-        mTextView.setText(Integer.toString(GetRandUnrepeatNumber(5,0)));
+        String text = null;
+        switch (GetRandUnrepeatNumber(1,5))
+        {
+            case 1:
+                text = this.getString(R.string.AlbertE1);
+                break;
+            case 2:
+                text = this.getString(R.string.AlbertE2);
+                break;
+            case 3:
+                text = this.getString(R.string.AlbertE3);
+                break;
+            case 4:
+                text = this.getString(R.string.AlbertE4);
+                break;
+            case 5:
+                text = this.getString(R.string.AlbertE5);
+                break;
+            case -1:
+                text = "Shit's happen :(";
+                break;
+        }
+        mTextView.setText(text);
     }
 
     public void afficherInfosBoutonImage2(View bouton)
     {
-        mTextView.setText(this.getString(R.string.winstonC5));
+        String text = null;
+        switch (GetRandUnrepeatNumber(1,5))
+        {
+            case 1:
+                text = this.getString(R.string.bttf1);
+                break;
+            case 2:
+                text = this.getString(R.string.bttf2);
+                break;
+            case 3:
+                text = this.getString(R.string.bttf3);
+                break;
+            case 4:
+                text = this.getString(R.string.bttf4);
+                break;
+            case 5:
+                text = this.getString(R.string.bttf5);
+                break;
+            case -1:
+                text = "Shit's happen :(";
+                break;
+        }
+        mTextView.setText(text);
     }
 
     public void afficherInfosBoutonImage3(View bouton)
     {
-
+        String text = null;
+        switch (GetRandUnrepeatNumber(1,5))
+        {
+            case 1:
+                text = this.getString(R.string.winstonC1);
+                break;
+            case 2:
+                text = this.getString(R.string.winstonC2);
+                break;
+            case 3:
+                text = this.getString(R.string.winstonC3);
+                break;
+            case 4:
+                text = this.getString(R.string.winstonC4);
+                break;
+            case 5:
+                text = this.getString(R.string.winstonC5);
+                break;
+            case -1:
+                text = "Shit's happen :(";
+                break;
+        }
+        mTextView.setText(text);
     }
 
     public int GetRandUnrepeatNumber(int min, int max)
