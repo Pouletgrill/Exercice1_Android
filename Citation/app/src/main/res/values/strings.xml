@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Citation</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Albert Einstein -->
+    <string name="AlbertE1">Je ne sais pas comment on fera la Troisième Guerre mondiale, mais je sais comment on fera la quatrième : avec des bâtons et des pierres.</string>
+    <string name="AlbertE2">L\'unique différence entre une épouse et une putain, c\'est que la première, grâce à des conditions de vie plus agréables, est capable d\'extorquer à l\'homme un contrat pour la vie.</string>
+    <string name="AlbertE3">L\'imagination est plus importante que le savoir. Le savoir est limité alors que l\'imagination englobe le monde entier, stimule le progrès, suscite l\'évolution.</string>
+    <string name="AlbertE4">L\'homme et sa sécurité doivent constituer la première préoccupation de toute aventure technologique.</string>
+    <string name="AlbertE5">A quoi ressemblerait la physique sans la gravitation ?</string>
+    <!-- Back To The Future -->
+    <string name="bttf1">Marty McFly : Mais merde, où sont-ils ?!\nEmmett Brown : Tu devrais plutôt demander : « Mais merde, quand sont-ils ?! »</string>
+    <string name="bttf2">Marty McFly : On va voir si ces fumiers s\'accrochent encore à 90 !</string>
+    <string name="bttf3">Marty McFly : Vous êtes en train de me dire qu\'il est 8 heures 25 minutes ? Oh la vache ! Je vais être en retard au lycée !</string>
+    <string name="bttf4">Emmett Brown : Nom de Zeus !</string>
+    <string name="bttf5">Biff Tannen : Allô ? Allô ? Y’a personne au bout du fil ? Faut réfléchir, McFly, faut réfléchir !</string>
+    <!-- Winston Churchill -->
+    <string name="winstonC1">Je n\'ai à offrir que du sang, de la peine, des larmes et de la sueur.</string>
+    <string name="winstonC2">La démocratie est le pire système de gouvernement, à l\'exception de tous les autres qui ont pu être expérimentés dans l\'histoire.</string>
+    <string name="winstonC3">Jamais dans l\'histoire des conflits, tant de gens n\'ont dû autant à si peu.</string>
+    <string name="winstonC4">Vous avez eu à choisir entre la guerre et le déshonneur ; vous avez choisi le déshonneur, vous aurez la guerre.</string>
+    <string name="winstonC5">Prenez les armes, et montrez votre valeur, soyez prêts au combat ; car il vaut mieux pour nous périr en combattant que d’affronter le spectacle de l’outrage fait à notre nation et à notre autel.</string>
+
+</resources>

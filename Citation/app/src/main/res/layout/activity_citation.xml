@@ -1,0 +1,44 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- boutons images -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <ImageButton
+            android:contentDescription="aaa"
+            android:src="@drawable/albert_einstein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage1"/>
+        <ImageButton
+            android:contentDescription="bbb"
+            android:src="@drawable/bttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage2"/>
+        <ImageButton
+            android:contentDescription="ww"
+            android:src="@drawable/winston"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="afficherInfosBoutonImage3"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/TV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:text="@string/app_name"/>
+    </LinearLayout>
+</LinearLayout>
