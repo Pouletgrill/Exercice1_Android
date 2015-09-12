@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bckgrd">
+
+    <LinearLayout
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!-- Table Layout pour le jeu -->
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TableRow android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/bouton00"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton01"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton02"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton03"
+                    android:visibility="invisible"/>
+            </TableRow>
+            <TableRow android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/bouton10"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton11"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton12"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton13"
+                    android:visibility="invisible"/>
+            </TableRow>
+            <TableRow android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/bouton20"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton21"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton22"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton23"
+                    android:visibility="invisible"/>
+            </TableRow>
+            <TableRow android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/bouton30"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton31"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton32"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/bouton33"
+                    android:visibility="invisible"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Boutton démarrer-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Start_Button_Text"/>
+    </LinearLayout>
+
+</LinearLayout>
