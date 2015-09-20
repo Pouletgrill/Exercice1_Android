@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Code d\'acces</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="erase_button">Éffacer</string>
+    <string name="validate_button">Valider</string>
+    <string name="invite_user">Nom d\'usager</string>
+    <string name="title_activity_activity_deux">ActivityDeux</string>
+    <string name="helloMessage">Bonjour </string>
+    <string name="ErrorMessage">Le Mot de passe n\'est pas bon</string>
+</resources>

@@ -30,7 +30,6 @@ public class ZeMagicButton extends AppCompatActivity {
         setContentView(R.layout.activity_ze_magic_button);
 
         // récupération des widgets depuis le fichier XML
-
         //Row 0
         list_Bouton.add((Button) findViewById(R.id.bouton00));
         list_Bouton.add((Button) findViewById(R.id.bouton01));
